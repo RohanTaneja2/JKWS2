@@ -33,7 +33,7 @@ def jwks():
     return jsonify(jwks_data)
 
 # Create /auth endpoint
-@app.route('/auth', methods=['POST'])
+@app.route('/auth', methods=['GET''POST'])
 def auth():
     if request.method == 'POST':
         jwt_token = create_jwt(private_key, key_id, expiry_timestamp)
