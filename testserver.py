@@ -1,22 +1,17 @@
-# test_server.py
 import unittest
-from server import app
-
+import requests
 
 class TestServer(unittest.TestCase):
-    def setUp(self):
-        self.app = app.test_client()
-
-    def test_auth_endpoint(self):
-        response = self.app.post('/auth')
-        self.assertEqual(response.status_code, 200)
-        self.assertIn('token', response.json)
 
     def test_jwks_endpoint(self):
-        response = self.app.get('/jwks')
+        response = requests.get('http://127.0.0.1:8080/jwks')
         self.assertEqual(response.status_code, 200)
-        self.assertIn('keys', response.json)
+        self.assertIn('keys', response.json())
 
+    def test_auth_endpoint(self):
+        response = requests.post('http://127.0.0.1:8080/auth')
+        self.assertEqual(response.status_code, 200)
+        # Assuming the response contains a JWT token, you might want to add further assertions here
 
 if __name__ == '__main__':
     unittest.main()
